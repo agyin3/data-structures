@@ -92,18 +92,14 @@ class LinkedList:
     def get_max(self):
         if self.head is None and self.tail is None:
             return None
-        
-        elif self.head is self.tail:
-            return self.head.get_value()
 
-        else:
-            curr_node = self.head
-            curr_max = self.head.get_value()
+        curr_node = self.head
+        curr_max = self.head.get_value()
 
-            while curr_node is not None:
-                
-                if curr_max <= curr_node.get_value():
-                    curr_max = curr_node.get_value()
-                curr_node = curr_node.get_next()
+        while curr_node is not None:
             
-            return curr_max
+            if curr_max <= curr_node.get_value():
+                curr_max = curr_node.get_value()
+            curr_node = curr_node.get_next()
+        
+        return curr_max
