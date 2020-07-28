@@ -17,10 +17,10 @@ class ListNode:
     def get_prev(self):
         return self.prev
 
-    def set_next(self, new_next):
+    def set_next(self, new_next=None):
         self.next = new_next
     
-    def set_prev(self, new_prev):
+    def set_prev(self, new_prev=None):
         self.prev = new_prev
             
 """
@@ -127,25 +127,63 @@ class DoublyLinkedList:
     List and inserts it as the new head node of the List.
     """
     def move_to_front(self, node):
-        pass
+        self.delete(node)
+        self.add_to_head(node.get_value())
         
     """
     Removes the input node from its current spot in the 
     List and inserts it as the new tail node of the List.
     """
     def move_to_end(self, node):
-        pass
+        self.delete(node)
+        self.add_to_tail(node.get_value())
 
     """
     Deletes the input node from the List, preserving the 
     order of the other elements of the List.
     """
     def delete(self, node):
-        pass
+        if self.tail is None and self.head is None:
+            return None
+
+        elif self.tail is self.head:
+            self.head = None
+            self.tail = None
+            self.length -= 1
+
+        elif node is self.head:
+            self.remove_from_head()
+        
+        elif node is self.tail:
+            self.remove_from_tail()
+
+        else:
+            curr_node = self.head
+            prev_node = None
+            next_node = self.head.get_next()
+
+            while curr_node is not node:
+                prev_node = curr_node
+                curr_node = next_node
+                next_node = curr_node.get_next()
+            
+            prev_node.set_next(next_node)
+            next_node.set_prev(prev_node)
+            curr_node = None
+            self.length -= 1
 
     """
     Finds and returns the maximum value of all the nodes 
     in the List.
     """
     def get_max(self):
-        pass
+        curr_max = self.head.get_value()
+        curr_node = self.head
+
+        while curr_node is not None:
+            if curr_node.get_value() > curr_max:
+                curr_max = curr_node.get_value()
+            
+            curr_node = curr_node.get_next()
+        
+        return curr_max
