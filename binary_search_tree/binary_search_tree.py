@@ -9,7 +9,7 @@ This part of the project comprises two days:
 2. Implement the `in_order_print`, `bft_print`, and `dft_print` methods
    on the BSTNode class.
 """
-class BSTNode:
+class BST:
     def __init__(self, value):
         self.value = value
         self.left = None
@@ -17,16 +17,41 @@ class BSTNode:
 
     # Insert the given value into the tree
     def insert(self, value):
-        pass
+        if value <= self.value:
+            if self.left is not None:
+                self.left.insert(value)
+            else:
+                self.left = BST(value)
+        else:
+            if self.right is not None:
+                print(self.right)
+                self.right.insert(value)
+            else:
+                self.right = BST(value)
 
     # Return True if the tree contains the value
     # False if it does not
     def contains(self, target):
-        pass
+        curr_node = self
+
+        while curr_node is not None:
+            if target == curr_node.value:
+                return True
+            elif target <= curr_node.value:
+                curr_node = curr_node.left
+            else:
+                curr_node = curr_node.right
+
+        return False
 
     # Return the maximum value found in the tree
     def get_max(self):
-        pass
+        curr_node = self
+
+        while curr_node.right is not None:
+            curr_node = curr_node.right
+        
+        return curr_node.value
 
     # Call the function `fn` on the value of each node
     def for_each(self, fn):
@@ -37,7 +62,12 @@ class BSTNode:
     # Print all the values in order from low to high
     # Hint:  Use a recursive, depth first traversal
     def in_order_print(self):
-        pass
+        if self:
+            if self.left:
+                self.left.in_order_print()
+            print(self.value)
+            if self.right:
+                self.right.in_order_print()
 
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
@@ -54,16 +84,26 @@ class BSTNode:
 
     # Print Pre-order recursive DFT
     def pre_order_dft(self):
-        pass
+        if self:
+            print(self.value)
+            if self.left:
+                self.left.pre_order_dft()
+            if self.right:
+                self.right.pre_order_dft()
 
     # Print Post-order recursive DFT
     def post_order_dft(self):
-        pass
+        if self:
+            if self.left:
+                self.left.post_order_dft()
+            if self.right:
+                self.right.post_order_dft()
+            print(self.value)
 
 """
 This code is necessary for testing the `print` methods
 """
-bst = BinarySearchTree(1)
+bst = BST(1)
 
 bst.insert(8)
 bst.insert(5)
@@ -80,6 +120,6 @@ print("elegant methods")
 print("pre order")
 bst.pre_order_dft()
 print("in order")
-bst.in_order_dft()
+bst.in_order_print()
 print("post order")
 bst.post_order_dft()  
